@@ -16,6 +16,10 @@ namespace CollabraDigital.Services.Contracts
             var response = await client.GetAsync("https://hacker-news.firebaseio.com/v0/beststories.json");
             var storyIds =  await response.Content.ReadFromJsonAsync<IEnumerable<int>>();
 
+            if(!response.IsSuccessStatusCode)
+            {
+                return default;
+            }
             var stories = new List<StoryResponseDto>();
             foreach (var storyId in storyIds.Take(n))
             {
